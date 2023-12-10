@@ -38,8 +38,8 @@ class Network:
         for i in range(2, len(a_s)):
             Nabla_w += [multiply(a_s[i],deltas[-i])]
         for i in range(len(self.weights)):
-            self.weights[i] = self.weights[i] - learning_rate*Nabla_w[i]
-            self.biases[i] = self.biases[i] - learning_rate*Nabla_n[-i-1]
+            self.weights[i] = self.weights[i] + learning_rate*Nabla_w[i]
+            self.biases[i] = self.biases[i] + learning_rate*Nabla_n[-i-1]
     def training(self, training_data : tuple, epochs, learning_rate):
         print("Training started")
         for epoch in range(epochs):
