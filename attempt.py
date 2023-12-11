@@ -19,4 +19,10 @@ def out(net: skeleton.Network, x):
 def guess(net: skeleton.Network, x):
     num = out(net, x)
     image(x, num)
+    return num
 
+
+def redraw(net :skeleton.Network, x):
+    image(x, 'input')
+    new = net.forward(x)
+    image(new, 'output')

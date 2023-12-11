@@ -38,8 +38,8 @@ class Network:
         for i in range(2, len(a_s)):
             Nabla_w += [multiply(a_s[i],deltas[-i])]
         for i in range(len(self.weights)):
-            self.weights[i] = self.weights[i] + learning_rate*Nabla_w[i]
-            self.biases[i] = self.biases[i] + learning_rate*Nabla_n[-i-1]
+            self.weights[i] = self.weights[i] - learning_rate*Nabla_w[i]
+            self.biases[i] = self.biases[i] - learning_rate*Nabla_n[-i-1]
     def training(self, training_data : tuple, epochs, learning_rate):
         print("Training started")
         for epoch in range(epochs):
@@ -53,9 +53,9 @@ class Network:
         i = 0
         for x, y in testing_data:
             a = self.forward(x)
-            cost += (linalg.norm(y-a))
+            cost += (abs(y-a))
             i += 1
-        return ((1/(i))*cost)
+        return mean(cost)
 
 
 
@@ -66,7 +66,7 @@ def sigma(x):
     
 
 def sigma_prime(x):
-    return sigma(x)*(sigma(x)-1) 
+    return sigma(x)*(1-sigma(x)) 
 
 # a = Network([1,2,1])
 # print(a.forward([0.9]))
