@@ -53,9 +53,9 @@ class Network:
         i = 0
         for x, y in testing_data:
             a = self.forward(x)
-            cost += (abs(y-a))
+            cost += 1 if (argmax(a) == y) else 0
             i += 1
-        return mean(cost)
+        return cost/i*100
 
 
 
