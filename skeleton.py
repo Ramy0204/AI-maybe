@@ -8,7 +8,7 @@ class Network:
         self.biases = [random.randn(self.ls[i], 1) for i in range(1, len(self.ls))]
     def forward(self, input : list):
         a = array(input).reshape(len(input), 1)
-        z = add((self.weights[0] @ a),self.biases[0])
+        z = add(multiply(self.weights[0], a),self.biases[0])
         a = sigma(z)
         for i in range(1, len(self.biases)):
             z = add(self.weights[i]@a, self.biases[i])
@@ -17,13 +17,13 @@ class Network:
     def backprop(self, x : list, y : list, learning_rate):
         x = array(x).reshape(len(x), 1)
         y = array(y).reshape(len(y), 1)
-        z = add(self.weights[0]@(x),self.biases[0])
+        z = add(multiply(self.weights[0],(x)),self.biases[0])
         a_s = [x]
         zs = [z]
         a = sigma(z)
         a_s.append(a)
         for i in range(1, len(self.ls)-1):
-            z = add(self.weights[i]@a, self.biases[i])
+            z = add(multiply(self.weights[i],a), self.biases[i])
             zs.append(z)
             a = sigma(z)
             a_s.append(a)
@@ -31,15 +31,15 @@ class Network:
         deltas = [delta_L]
         delta_l = delta_L
         for i in range(1, len(self.weights)):
-            delta_l = multiply(((self.weights[-i]).transpose())@deltas[-1],sigma_prime(zs[-i-1]))
+            delta_l = multiply(multiply(((self.weights[-i]).transpose()),deltas[-1]),sigma_prime(zs[-i-1]))
             deltas.append(delta_l)
         Nabla_w = [multiply(a_s[1],deltas[-1])]
         Nabla_n = deltas
         for i in range(2, len(a_s)):
             Nabla_w += [multiply(a_s[i],deltas[-i])]
         for i in range(len(self.weights)):
-            self.weights[i] = self.weights[i] - learning_rate*Nabla_w[i]
-            self.biases[i] = self.biases[i] - learning_rate*Nabla_n[-i-1]
+            self.weights[i] = self.weights[i] - learning_rate/len(self.weights)*Nabla_w[i]
+            self.biases[i] = self.biases[i] - learning_rate/len(self.biases)*Nabla_n[-i-1]
     def training(self, training_data : tuple, epochs, learning_rate):
         print("Training started")
         for epoch in range(epochs):
@@ -49,13 +49,9 @@ class Network:
                 self.backprop(x,y,learning_rate)
         print("Training Ended")
     def evaluate_accuracy(self, testing_data):
-        cost = 0
-        i = 0
-        for x, y in testing_data:
-            a = self.forward(x)
-            cost += (abs(y-a))
-            i += 1
-        return mean(cost)
+        test_results = [(argmax(self.forward(x)), y)
+                        for (x, y) in testing_data]
+        return sum(int(x == y) for (x, y) in test_results)
 
 
 

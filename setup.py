@@ -1,5 +1,5 @@
 import mnist_loader
-import attempt
+import redrawattempt
 
 a = mnist_loader.load_data()
-im = a[0][0][0]
+im = a[0][0]
