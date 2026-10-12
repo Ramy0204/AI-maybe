@@ -41,7 +41,6 @@ The 784 neurons of the input layer represent the 784 pixels of a 28×28 MNIST im
 - `attempt.py` — Some additional functions I made to convert arrays into images and visualize the network's guesses.
 - `data/` — Contains the MNIST dataset and some images.
 - `models/` — Contains a saved network file.
-- `neural-networks-and-deep-learning/` — Michael Nielsen's original example code, which I kept as a reference.
 
 ## How to try it
 
