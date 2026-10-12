@@ -64,7 +64,7 @@ In particular, I got a much better understanding of how the different layers int
 
 This was mainly a learning project, so the code is not necessarily the most efficient or the cleanest implementation. The point was to understand how everything worked by trying to make it myself.
 
-## Credits
+## Sources
 
 - [3Blue1Brown — Neural Networks](https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi)
 - [Michael Nielsen — Neural Networks and Deep Learning](https://neuralnetworksanddeeplearning.com/)
